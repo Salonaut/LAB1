@@ -7,243 +7,48 @@
 
 using namespace std;
 
-// Функції для вимірювання часу для додавання для різних типів
-double measureTimeIntAdd(int a, int b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile int result = a + b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
 
-double measureTimeLongAdd(long a, long b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile long result = a + b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
+double measureTimeIntAdd(int a, int b, int iterations);
+double measureTimeLongAdd(long a, long b, int iterations);
+double measureTimeDoubleAdd(double a, double b, int iterations);
+double measureTimeFloatAdd(float a, float b, int iterations);
+double measureTimeCharAdd(char a, char b, int iterations);
 
-double measureTimeDoubleAdd(double a, double b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile double result = a + b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
 
-double measureTimeFloatAdd(float a, float b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile float result = a + b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
+double measureTimeIntSub(int a, int b, int iterations);
+double measureTimeLongSub(long a, long b, int iterations);
+double measureTimeDoubleSub(double a, double b, int iterations);
+double measureTimeFloatSub(float a, float b, int iterations);
+double measureTimeCharSub(char a, char b, int iterations);
 
-double measureTimeCharAdd(char a, char b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile char result = a + b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
 
-// Функції для вимірювання часу для віднімання для різних типів
-double measureTimeIntSub(int a, int b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile int result = a - b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
+double measureTimeIntMul(int a, int b, int iterations);
+double measureTimeLongMul(long a, long b, int iterations);
+double measureTimeDoubleMul(double a, double b, int iterations);
+double measureTimeFloatMul(float a, float b, int iterations);
+double measureTimeCharMul(char a, char b, int iterations);
 
-double measureTimeLongSub(long a, long b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile long result = a - b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
 
-double measureTimeDoubleSub(double a, double b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile double result = a - b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
+double measureTimeIntDiv(int a, int b, int iterations);
+double measureTimeLongDiv(long a, long b, int iterations);
+double measureTimeDoubleDiv(double a, double b, int iterations);
+double measureTimeFloatDiv(float a, float b, int iterations);
+double measureTimeCharDiv(char a, char b, int iterations);
 
-double measureTimeFloatSub(float a, float b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile float result = a - b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
 
-double measureTimeCharSub(char a, char b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile char result = a - b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
+void printResultsToFile(vector<string>& operations, vector<double>& times, vector<string>& dataTypes, int fastestIndex);
 
-// Функції для вимірювання часу для множення для різних типів
-double measureTimeIntMul(int a, int b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile int result = a * b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
 
-double measureTimeLongMul(long a, long b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile long result = a * b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
-
-double measureTimeDoubleMul(double a, double b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile double result = a * b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
-
-double measureTimeFloatMul(float a, float b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile float result = a * b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
-
-double measureTimeCharMul(char a, char b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        volatile char result = a * b;
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
-
-// Функції для вимірювання часу для ділення для різних типів
-double measureTimeIntDiv(int a, int b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        if (b != 0) {
-            volatile int result = a / b;
-        }
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
-
-double measureTimeLongDiv(long a, long b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        if (b != 0) {
-            volatile long result = a / b;
-        }
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
-
-double measureTimeDoubleDiv(double a, double b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        if (b != 0) {
-            volatile double result = a / b;
-        }
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
-
-double measureTimeFloatDiv(float a, float b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        if (b != 0) {
-            volatile float result = a / b;
-        }
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
-
-double measureTimeCharDiv(char a, char b, int iterations) {
-    clock_t start = clock();
-    for (int i = 0; i < iterations; ++i) {
-        if (b != 0) {
-            volatile char result = a / b;
-        }
-    }
-    clock_t end = clock();
-    return double(end - start) / CLOCKS_PER_SEC;
-}
-
-// Функція для запису результатів в файл
-void printResultsToFile(vector<string>& operations, vector<double>& times, vector<string>& dataTypes, int fastestIndex) {
-    ofstream outFile("operation_times.txt");
-
-    if (outFile.is_open()) {
-        outFile << "+-------------------+--------------------+-----------------------+------------------------+----------------+\n";
-        outFile << "| Operation         | Data Type          | Operations per Second  | Speed (Percentage)      |                |\n";
-        outFile << "+-------------------+--------------------+-----------------------+------------------------+----------------+\n";
-
-        for (int i = 0; i < operations.size(); i++) {
-            for (int j = 0; j < dataTypes.size(); j++) {
-                double timeTaken = times[i * dataTypes.size() + j];
-                double opsPerSec = 1.0 / timeTaken;
-                int speedPercentage = static_cast<int>((times[fastestIndex] / timeTaken) * 100);
-
-                // Обмежуємо довжину бару до 50 символів
-                int maxBarLength = 50;
-                int barLength = std::min(speedPercentage / 2, maxBarLength);
-                string bar = string(barLength, '=');
-
-                outFile << "| " << left << setw(17) << operations[i]
-                        << "| " << left << setw(18) << dataTypes[j]
-                        << "| " << setw(21) << fixed << setprecision(2) << opsPerSec
-                        << "| " << left << setw(22) << bar << " " << speedPercentage << "%" << "|\n";
-            }
-        }
-
-        outFile << "+-------------------+--------------------+-----------------------+------------------------+----------------+\n";
-        outFile.close();
-    } else {
-        cout << "Error opening file for writing results!" << endl;
-    }
-}
 
 int main() {
     vector<string> operations = {"Addition", "Subtraction", "Multiplication", "Division"};
     vector<string> dataTypes = {"int", "long", "double", "float", "char"};
-    vector<int> iterations = {10000000}; // Number of iterations to run
+    vector<int> iterations = {10000000}; // Кількість ітерацій
     vector<double> times(operations.size() * dataTypes.size(), 0);
 
-    int fastestIndex = 0; // This will be updated later to the fastest operation
+    int fastestIndex = 0;
 
-    // Running the operations and measuring the time
+
     for (int i = 0; i < operations.size(); i++) {
         for (int j = 0; j < dataTypes.size(); j++) {
             double timeTaken = 0.0;
@@ -275,15 +80,235 @@ int main() {
 
             times[i * dataTypes.size() + j] = timeTaken;
 
-            // Finding the fastest operation
+
             if (timeTaken < times[fastestIndex]) {
                 fastestIndex = i * dataTypes.size() + j;
             }
         }
     }
 
-    // Printing the results to file
+
     printResultsToFile(operations, times, dataTypes, fastestIndex);
 
     return 0;
+}
+
+
+
+
+double measureTimeIntAdd(int a, int b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile int result = a + b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeLongAdd(long a, long b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile long result = a + b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeDoubleAdd(double a, double b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile double result = a + b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeFloatAdd(float a, float b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile float result = a + b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeCharAdd(char a, char b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile char result = a + b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+
+
+
+
+double measureTimeIntSub(int a, int b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile int result = a - b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeLongSub(long a, long b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile long result = a - b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeDoubleSub(double a, double b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile double result = a - b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeFloatSub(float a, float b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile float result = a - b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeCharSub(char a, char b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile char result = a - b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+
+
+
+double measureTimeIntMul(int a, int b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile int result = a * b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeLongMul(long a, long b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile long result = a * b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeDoubleMul(double a, double b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile double result = a * b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeFloatMul(float a, float b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile float result = a * b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeCharMul(char a, char b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        volatile char result = a * b;
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+
+
+
+double measureTimeIntDiv(int a, int b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        if (b != 0) {
+            volatile int result = a / b;
+        }
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeLongDiv(long a, long b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        if (b != 0) {
+            volatile long result = a / b;
+        }
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeDoubleDiv(double a, double b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        if (b != 0) {
+            volatile double result = a / b;
+        }
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeFloatDiv(float a, float b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        if (b != 0) {
+            volatile float result = a / b;
+        }
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+double measureTimeCharDiv(char a, char b, int iterations) {
+    clock_t start = clock();
+    for (int i = 0; i < iterations; ++i) {
+        if (b != 0) {
+            volatile char result = a / b;
+        }
+    }
+    clock_t end = clock();
+    return double(end - start) / CLOCKS_PER_SEC;
+}
+
+
+
+
+void printResultsToFile(vector<string>& operations, vector<double>& times, vector<string>& dataTypes, int fastestIndex) {
+    ofstream outFile("operation_times.txt");
+
+    if (outFile.is_open()) {
+        outFile << "+-------------------+--------------------+-----------------------+------------------------+----------------+\n";
+        outFile << "| Operation         | Data Type          | Operations per Second  | Speed (Percentage)      |                |\n";
+        outFile << "+-------------------+--------------------+-----------------------+------------------------+----------------+\n";
+
+        for (int i = 0; i < operations.size(); i++) {
+            for (int j = 0; j < dataTypes.size(); j++) {
+                double timeTaken = times[i * dataTypes.size() + j];
+                double opsPerSec = 1.0 / timeTaken;
+                int speedPercentage = static_cast<int>((times[fastestIndex] / timeTaken) * 100);
+
+                // Обмежуємо довжину бару до 50 символів
+                int maxBarLength = 50;
+                int barLength = std::min(speedPercentage / 2, maxBarLength);
+                string bar = string(barLength, '=');
+
+                outFile << "| " << left << setw(17) << operations[i]
+                        << "| " << left << setw(18) << dataTypes[j]
+                        << "| " << setw(21) << fixed << setprecision(2) << opsPerSec
+                        << "| " << left << setw(22) << bar << " " << speedPercentage << "%" << "|\n";
+            }
+        }
+
+        outFile << "+-------------------+--------------------+-----------------------+------------------------+----------------+\n";
+        outFile.close();
+    } else {
+        cout << "Error opening file for writing results!" << endl;
+    }
 }
