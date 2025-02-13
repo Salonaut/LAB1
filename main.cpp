@@ -294,7 +294,7 @@ void printResultsToFile(vector<string>& operations, vector<double>& times, vecto
                 double opsPerSec = 1.0 / timeTaken;
                 int speedPercentage = static_cast<int>((times[fastestIndex] / timeTaken) * 100);
 
-                // Обмежуємо довжину бару до 50 символів
+               
                 int maxBarLength = 50;
                 int barLength = std::min(speedPercentage / 2, maxBarLength);
                 string bar = string(barLength, '=');
