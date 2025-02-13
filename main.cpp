@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// Функції для вимірювання часу для додавання для різних типів
+
 double measureTimeIntAdd(int a, int b, int iterations) {
     clock_t start = clock();
     for (int i = 0; i < iterations; ++i) {
@@ -53,7 +53,7 @@ double measureTimeCharAdd(char a, char b, int iterations) {
     return double(end - start) / CLOCKS_PER_SEC;
 }
 
-// Функції для вимірювання часу для віднімання для різних типів
+
 double measureTimeIntSub(int a, int b, int iterations) {
     clock_t start = clock();
     for (int i = 0; i < iterations; ++i) {
@@ -99,7 +99,7 @@ double measureTimeCharSub(char a, char b, int iterations) {
     return double(end - start) / CLOCKS_PER_SEC;
 }
 
-// Функції для вимірювання часу для множення для різних типів
+
 double measureTimeIntMul(int a, int b, int iterations) {
     clock_t start = clock();
     for (int i = 0; i < iterations; ++i) {
@@ -145,7 +145,7 @@ double measureTimeCharMul(char a, char b, int iterations) {
     return double(end - start) / CLOCKS_PER_SEC;
 }
 
-// Функції для вимірювання часу для ділення для різних типів
+
 double measureTimeIntDiv(int a, int b, int iterations) {
     clock_t start = clock();
     for (int i = 0; i < iterations; ++i) {
@@ -201,7 +201,7 @@ double measureTimeCharDiv(char a, char b, int iterations) {
     return double(end - start) / CLOCKS_PER_SEC;
 }
 
-// Функція для запису результатів в файл
+
 void printResultsToFile(vector<string>& operations, vector<double>& times, vector<string>& dataTypes, int fastestIndex) {
     ofstream outFile("operation_times.txt");
 
@@ -216,7 +216,7 @@ void printResultsToFile(vector<string>& operations, vector<double>& times, vecto
                 double opsPerSec = 1.0 / timeTaken;
                 int speedPercentage = static_cast<int>((times[fastestIndex] / timeTaken) * 100);
 
-                // Обмежуємо довжину бару до 50 символів
+   
                 int maxBarLength = 50;
                 int barLength = std::min(speedPercentage / 2, maxBarLength);
                 string bar = string(barLength, '=');
@@ -243,7 +243,7 @@ int main() {
 
     int fastestIndex = 0; // This will be updated later to the fastest operation
 
-    // Running the operations and measuring the time
+
     for (int i = 0; i < operations.size(); i++) {
         for (int j = 0; j < dataTypes.size(); j++) {
             double timeTaken = 0.0;
@@ -282,7 +282,7 @@ int main() {
         }
     }
 
-    // Printing the results to file
+
     printResultsToFile(operations, times, dataTypes, fastestIndex);
 
     return 0;
