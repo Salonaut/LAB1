@@ -241,7 +241,7 @@ int main() {
     vector<int> iterations = {10000000}; // Number of iterations to run
     vector<double> times(operations.size() * dataTypes.size(), 0);
 
-    int fastestIndex = 0; // This will be updated later to the fastest operation
+    int fastestIndex = 0; 
 
 
     for (int i = 0; i < operations.size(); i++) {
