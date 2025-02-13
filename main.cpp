@@ -7,90 +7,7 @@
 
 using namespace std;
 
-double measureTimeIntAdd(int a, int b, int iterations);
-double measureTimeLongAdd(long a, long b, int iterations);
-double measureTimeDoubleAdd(double a, double b, int iterations);
-double measureTimeFloatAdd(float a, float b, int iterations);
-double measureTimeCharAdd(char a, char b, int iterations);
-
-
-double measureTimeIntSub(int a, int b, int iterations);
-double measureTimeLongSub(long a, long b, int iterations);
-double measureTimeDoubleSub(double a, double b, int iterations);
-double measureTimeFloatSub(float a, float b, int iterations);
-double measureTimeCharSub(char a, char b, int iterations);
-
-
-double measureTimeIntMul(int a, int b, int iterations);
-double measureTimeLongMul(long a, long b, int iterations);
-double measureTimeDoubleMul(double a, double b, int iterations);
-double measureTimeFloatMul(float a, float b, int iterations);
-double measureTimeCharMul(char a, char b, int iterations);
-
-
-double measureTimeIntDiv(int a, int b, int iterations);
-double measureTimeLongDiv(long a, long b, int iterations);
-double measureTimeDoubleDiv(double a, double b, int iterations);
-double measureTimeFloatDiv(float a, float b, int iterations);
-double measureTimeCharDiv(char a, char b, int iterations);
-
-
-void printResultsToFile(vector<string>& operations, vector<double>& times, vector<string>& dataTypes, int fastestIndex);
-
-int main() {
-    vector<string> operations = {"Addition", "Subtraction", "Multiplication", "Division"};
-    vector<string> dataTypes = {"int", "long", "double", "float", "char"};
-    vector<int> iterations = {10000000};
-    vector<double> times(operations.size() * dataTypes.size(), 0);
-
-    int fastestIndex = 0;
-
-
-    for (int i = 0; i < operations.size(); i++) {
-        for (int j = 0; j < dataTypes.size(); j++) {
-            double timeTaken = 0.0;
-            if (operations[i] == "Addition") {
-                if (dataTypes[j] == "int") timeTaken = measureTimeIntAdd(1, 1, iterations[0]);
-                if (dataTypes[j] == "long") timeTaken = measureTimeLongAdd(1, 1, iterations[0]);
-                if (dataTypes[j] == "double") timeTaken = measureTimeDoubleAdd(1.0, 1.0, iterations[0]);
-                if (dataTypes[j] == "float") timeTaken = measureTimeFloatAdd(1.0f, 1.0f, iterations[0]);
-                if (dataTypes[j] == "char") timeTaken = measureTimeCharAdd('a', 'b', iterations[0]);
-            } else if (operations[i] == "Subtraction") {
-                if (dataTypes[j] == "int") timeTaken = measureTimeIntSub(1, 1, iterations[0]);
-                if (dataTypes[j] == "long") timeTaken = measureTimeLongSub(1, 1, iterations[0]);
-                if (dataTypes[j] == "double") timeTaken = measureTimeDoubleSub(1.0, 1.0, iterations[0]);
-                if (dataTypes[j] == "float") timeTaken = measureTimeFloatSub(1.0f, 1.0f, iterations[0]);
-                if (dataTypes[j] == "char") timeTaken = measureTimeCharSub('a', 'b', iterations[0]);
-            } else if (operations[i] == "Multiplication") {
-                if (dataTypes[j] == "int") timeTaken = measureTimeIntMul(1, 1, iterations[0]);
-                if (dataTypes[j] == "long") timeTaken = measureTimeLongMul(1, 1, iterations[0]);
-                if (dataTypes[j] == "double") timeTaken = measureTimeDoubleMul(1.0, 1.0, iterations[0]);
-                if (dataTypes[j] == "float") timeTaken = measureTimeFloatMul(1.0f, 1.0f, iterations[0]);
-                if (dataTypes[j] == "char") timeTaken = measureTimeCharMul('a', 'b', iterations[0]);
-            } else if (operations[i] == "Division") {
-                if (dataTypes[j] == "int") timeTaken = measureTimeIntDiv(1, 1, iterations[0]);
-                if (dataTypes[j] == "long") timeTaken = measureTimeLongDiv(1, 1, iterations[0]);
-                if (dataTypes[j] == "double") timeTaken = measureTimeDoubleDiv(1.0, 1.0, iterations[0]);
-                if (dataTypes[j] == "float") timeTaken = measureTimeFloatDiv(1.0f, 1.0f, iterations[0]);
-                if (dataTypes[j] == "char") timeTaken = measureTimeCharDiv('a', 'b', iterations[0]);
-            }
-
-            times[i * dataTypes.size() + j] = timeTaken;
-
-
-            if (timeTaken < times[fastestIndex]) {
-                fastestIndex = i * dataTypes.size() + j;
-            }
-        }
-    }
-
-
-    printResultsToFile(operations, times, dataTypes, fastestIndex);
-
-    return 0;
-}
-
-
+// Функції для вимірювання часу для додавання для різних типів
 double measureTimeIntAdd(int a, int b, int iterations) {
     clock_t start = clock();
     for (int i = 0; i < iterations; ++i) {
@@ -136,9 +53,7 @@ double measureTimeCharAdd(char a, char b, int iterations) {
     return double(end - start) / CLOCKS_PER_SEC;
 }
 
-
-
-
+// Функції для вимірювання часу для віднімання для різних типів
 double measureTimeIntSub(int a, int b, int iterations) {
     clock_t start = clock();
     for (int i = 0; i < iterations; ++i) {
@@ -184,9 +99,7 @@ double measureTimeCharSub(char a, char b, int iterations) {
     return double(end - start) / CLOCKS_PER_SEC;
 }
 
-
-
-
+// Функції для вимірювання часу для множення для різних типів
 double measureTimeIntMul(int a, int b, int iterations) {
     clock_t start = clock();
     for (int i = 0; i < iterations; ++i) {
@@ -232,9 +145,7 @@ double measureTimeCharMul(char a, char b, int iterations) {
     return double(end - start) / CLOCKS_PER_SEC;
 }
 
-
-
-
+// Функції для вимірювання часу для ділення для різних типів
 double measureTimeIntDiv(int a, int b, int iterations) {
     clock_t start = clock();
     for (int i = 0; i < iterations; ++i) {
@@ -290,9 +201,7 @@ double measureTimeCharDiv(char a, char b, int iterations) {
     return double(end - start) / CLOCKS_PER_SEC;
 }
 
-
-
-
+// Функція для запису результатів в файл
 void printResultsToFile(vector<string>& operations, vector<double>& times, vector<string>& dataTypes, int fastestIndex) {
     ofstream outFile("operation_times.txt");
 
@@ -307,7 +216,7 @@ void printResultsToFile(vector<string>& operations, vector<double>& times, vecto
                 double opsPerSec = 1.0 / timeTaken;
                 int speedPercentage = static_cast<int>((times[fastestIndex] / timeTaken) * 100);
 
-
+                // Обмежуємо довжину бару до 50 символів
                 int maxBarLength = 50;
                 int barLength = std::min(speedPercentage / 2, maxBarLength);
                 string bar = string(barLength, '=');
@@ -326,4 +235,55 @@ void printResultsToFile(vector<string>& operations, vector<double>& times, vecto
     }
 }
 
+int main() {
+    vector<string> operations = {"Addition", "Subtraction", "Multiplication", "Division"};
+    vector<string> dataTypes = {"int", "long", "double", "float", "char"};
+    vector<int> iterations = {10000000}; // Number of iterations to run
+    vector<double> times(operations.size() * dataTypes.size(), 0);
 
+    int fastestIndex = 0; // This will be updated later to the fastest operation
+
+    // Running the operations and measuring the time
+    for (int i = 0; i < operations.size(); i++) {
+        for (int j = 0; j < dataTypes.size(); j++) {
+            double timeTaken = 0.0;
+            if (operations[i] == "Addition") {
+                if (dataTypes[j] == "int") timeTaken = measureTimeIntAdd(1, 1, iterations[0]);
+                if (dataTypes[j] == "long") timeTaken = measureTimeLongAdd(1, 1, iterations[0]);
+                if (dataTypes[j] == "double") timeTaken = measureTimeDoubleAdd(1.0, 1.0, iterations[0]);
+                if (dataTypes[j] == "float") timeTaken = measureTimeFloatAdd(1.0f, 1.0f, iterations[0]);
+                if (dataTypes[j] == "char") timeTaken = measureTimeCharAdd('a', 'b', iterations[0]);
+            } else if (operations[i] == "Subtraction") {
+                if (dataTypes[j] == "int") timeTaken = measureTimeIntSub(1, 1, iterations[0]);
+                if (dataTypes[j] == "long") timeTaken = measureTimeLongSub(1, 1, iterations[0]);
+                if (dataTypes[j] == "double") timeTaken = measureTimeDoubleSub(1.0, 1.0, iterations[0]);
+                if (dataTypes[j] == "float") timeTaken = measureTimeFloatSub(1.0f, 1.0f, iterations[0]);
+                if (dataTypes[j] == "char") timeTaken = measureTimeCharSub('a', 'b', iterations[0]);
+            } else if (operations[i] == "Multiplication") {
+                if (dataTypes[j] == "int") timeTaken = measureTimeIntMul(1, 1, iterations[0]);
+                if (dataTypes[j] == "long") timeTaken = measureTimeLongMul(1, 1, iterations[0]);
+                if (dataTypes[j] == "double") timeTaken = measureTimeDoubleMul(1.0, 1.0, iterations[0]);
+                if (dataTypes[j] == "float") timeTaken = measureTimeFloatMul(1.0f, 1.0f, iterations[0]);
+                if (dataTypes[j] == "char") timeTaken = measureTimeCharMul('a', 'b', iterations[0]);
+            } else if (operations[i] == "Division") {
+                if (dataTypes[j] == "int") timeTaken = measureTimeIntDiv(1, 1, iterations[0]);
+                if (dataTypes[j] == "long") timeTaken = measureTimeLongDiv(1, 1, iterations[0]);
+                if (dataTypes[j] == "double") timeTaken = measureTimeDoubleDiv(1.0, 1.0, iterations[0]);
+                if (dataTypes[j] == "float") timeTaken = measureTimeFloatDiv(1.0f, 1.0f, iterations[0]);
+                if (dataTypes[j] == "char") timeTaken = measureTimeCharDiv('a', 'b', iterations[0]);
+            }
+
+            times[i * dataTypes.size() + j] = timeTaken;
+
+            // Finding the fastest operation
+            if (timeTaken < times[fastestIndex]) {
+                fastestIndex = i * dataTypes.size() + j;
+            }
+        }
+    }
+
+    // Printing the results to file
+    printResultsToFile(operations, times, dataTypes, fastestIndex);
+
+    return 0;
+}
