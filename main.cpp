@@ -36,7 +36,7 @@ double measureTimeFloatDiv(float a, float b, int iterations);
 double measureTimeCharDiv(char a, char b, int iterations);
 
 
-void printResultsToFile(vector<string>& operations, vector<double>& times, vector<string>& dataTypes, int fastestIndex);
+void printResultsToFile(vector<string>& operations, vector<double>& times, vector<string>& dataTypes, int fastestIndex, int iterations);
 
 
 
@@ -87,8 +87,14 @@ int main() {
         }
     }
 
+    string it;
+    for (int i = 0; i < iterations.size(); i++) {
+        it += to_string(iterations[i]);
+    }
 
-    printResultsToFile(operations, times, dataTypes, fastestIndex);
+    int iter = stoi(it);
+
+    printResultsToFile(operations, times, dataTypes, fastestIndex, iter);
 
     return 0;
 }
@@ -278,37 +284,63 @@ double measureTimeCharDiv(char a, char b, int iterations) {
 }
 
 
-
-
-void printResultsToFile(vector<string>& operations, vector<double>& times, vector<string>& dataTypes, int fastestIndex) {
+void printResultsToFile(vector<string>& operations, vector<double>& times, vector<string>& dataTypes, int fastestIndex, int iterations) {
     ofstream outFile("operation_times.txt");
 
-    if (outFile.is_open()) {
-        outFile << "+-------------------+--------------------+-----------------------+------------------------+----------------+\n";
-        outFile << "| Operation         | Data Type          | Operations per Second  | Speed (Percentage)      |                |\n";
-        outFile << "+-------------------+--------------------+-----------------------+------------------------+----------------+\n";
+    if (!outFile.is_open()) {
+        cerr << "Error opening file for writing results!" << endl;
+        return;
+    }
 
-        for (int i = 0; i < operations.size(); i++) {
-            for (int j = 0; j < dataTypes.size(); j++) {
-                double timeTaken = times[i * dataTypes.size() + j];
-                double opsPerSec = 1.0 / timeTaken;
-                int speedPercentage = static_cast<int>((times[fastestIndex] / timeTaken) * 100);
+    outFile << "+-------------------+--------------------+-----------------------+------------------------+\n";
+    outFile << "| Operation         | Data Type          | Operations per Second | Speed (Percentage)     |\n";
+    outFile << "+-------------------+--------------------+-----------------------+------------------------+\n";
 
-                // Обмежуємо довжину бару до 50 символів
-                int maxBarLength = 50;
-                int barLength = std::min(speedPercentage / 2, maxBarLength);
-                string bar = string(barLength, '=');
+    if (fastestIndex < 0 || fastestIndex >= times.size()) {
+        cerr << "Error: fastestIndex is out of bounds!\n";
+        fastestIndex = 0;
+    }
 
+    double fastestTime = times[fastestIndex];
+
+    if (fastestTime <= 0) {
+        cerr << "Warning: fastestTime is invalid (<= 0), setting to 1e-9.\n";
+        fastestTime = 1e-9;
+    }
+
+    for (int i = 0; i < operations.size(); i++) {
+        for (int j = 0; j < dataTypes.size(); j++) {
+            double timeTaken = times[i * dataTypes.size() + j];
+
+            if (timeTaken <= 0) {
                 outFile << "| " << left << setw(17) << operations[i]
                         << "| " << left << setw(18) << dataTypes[j]
-                        << "| " << setw(21) << fixed << setprecision(2) << opsPerSec
-                        << "| " << left << setw(22) << bar << " " << speedPercentage << "%" << "|\n";
+                        << "| " << setw(21) << "N/A (Invalid Time)"
+                        << "| " << left << setw(22) << "N/A" << " |\n";
+                continue;
             }
-        }
 
-        outFile << "+-------------------+--------------------+-----------------------+------------------------+----------------+\n";
-        outFile.close();
-    } else {
-        cout << "Error opening file for writing results!" << endl;
+            double opsPerSec = iterations / timeTaken;
+
+            // Пояснення, чому може бути Speed (Percentage) == 0:
+            // Якщо fastestTime або timeTaken дуже маленькі, або якщо timeTaken майже такий же як fastestTime.
+            int speedPercentage = static_cast<int>((fastestTime / timeTaken) * 100);
+            speedPercentage = std::max(speedPercentage, 1); // Мінімум 1% для найшвидшої операції
+
+            // Додаємо для дебагу виведення значень
+            cerr << "Time taken: " << timeTaken << ", Speed percentage: " << speedPercentage << "%" << endl;
+
+            int maxBarLength = 50;
+            int barLength = std::min(speedPercentage / 2, maxBarLength);
+            string bar(barLength, '=');
+
+            outFile << "| " << left << setw(17) << operations[i]
+                    << "| " << left << setw(18) << dataTypes[j]
+                    << "| " << setw(21) << fixed << setprecision(2) << opsPerSec
+                    << "| " << left << setw(22) << bar << " " << speedPercentage << "%" << " |\n";
+        }
     }
+
+    outFile << "+-------------------+--------------------+-----------------------+------------------------+\n";
+    outFile.close();
 }
