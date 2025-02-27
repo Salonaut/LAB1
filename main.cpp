@@ -322,12 +322,11 @@ void printResultsToFile(vector<string>& operations, vector<double>& times, vecto
 
             double opsPerSec = iterations / timeTaken;
 
-            // Пояснення, чому може бути Speed (Percentage) == 0:
-            // Якщо fastestTime або timeTaken дуже маленькі, або якщо timeTaken майже такий же як fastestTime.
+            
             int speedPercentage = static_cast<int>((fastestTime / timeTaken) * 100);
             speedPercentage = std::max(speedPercentage, 1); // Мінімум 1% для найшвидшої операції
 
-            // Додаємо для дебагу виведення значень
+            
             cerr << "Time taken: " << timeTaken << ", Speed percentage: " << speedPercentage << "%" << endl;
 
             int maxBarLength = 50;
